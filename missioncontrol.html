@@ -1,19 +1,20 @@
 <!doctype html>
 
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
+	<meta charset="utf-8">
 
-  <title>IMF Intranet</title>
-  <meta name="description" content="IMF Mission Control">
-  <meta name="author" content="Sean Wang">
-  <!-- Map provider: MAPBOX -->
-  <!-- IMF Logo by: Asainguy444 -->
+	<title>IMF Intranet</title>
+	<meta name="description" content="IMF Mission Control">
+	<meta name="author" content="Sean Wang">
+	<!-- Map provider: MAPBOX -->
+	<!-- IMF Logo by: Asainguy444 -->
 
-  <link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style.css">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
-  <script src="https://use.fontawesome.com/764dc9025c.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+	<script src="https://use.fontawesome.com/764dc9025c.js"></script>
 </head>
 
 <body>
@@ -28,7 +29,7 @@
 
 	<!-- Mustache js templates -->
 	<script id="team-template" type="x-tmpl-mustache">
-  		<div class="team-path" style="width: {{teamWidth}};">
+		<div class="team-path" style="width: {{teamWidth}};">
 			<p class="team-tile">Unit: {{teamName}}</p>
 			<p class="mission-tile {{status}}">{{status}}</p>
 			{{{missionArea}}}
@@ -37,7 +38,6 @@
 	<script id="mission-template" type="x-tmpl-mustache">
 		<p class="mission-tile {{missionStatus}}">Mission: {{missionName}}</p>
 	</script>
-	
 
 	<!-- Some old code -->
 	<!-- <div class="team-path">
@@ -57,6 +57,7 @@
 	<p class="round-container plain"><span class="fa fa-square fa-lg"></span> Mission: 2</p>
 	<p class="round-container offline"><span class="fa fa-square fa-lg"></span> Mission: 3</p>
 	<p><span class="fa fa-check-square-o fa-lg"></span> Online</p> -->
+
 </body>
 
 <script type="text/javascript">
@@ -80,8 +81,7 @@
 
 		rendered += Mustache.render(teamTemplate, teams[teamNum]);
 	}
-
-	
 	document.getElementById('team-area').innerHTML = rendered;
 </script>
+
 </html>

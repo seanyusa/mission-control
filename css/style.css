@@ -2,10 +2,10 @@ html {
 	background-image: url("../assets/bgmap.png");
 
 	-webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  text-align: center;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	text-align: center;
 }
 
 .header {
@@ -35,35 +35,35 @@ p {
 .team-tile {
 	border-radius: 25px;
 	border: 2px solid #2F2AC0;
-    background: rgba(0, 0, 0, 0.8);
-    padding: 8px; 
-    margin: 5px; 
-    text-align: center;
-    color: white;
+	background: rgba(0, 0, 0, 0.8);
+	padding: 8px; 
+	margin: 5px; 
+	text-align: center;
+	color: white;
 }
 
 .mission-tile {
 	border-radius: 25px;
 	border: 2px solid #2F2AC0;
-    background: rgba(0, 0, 0, 0.8);
-    padding: 8px; 
-    padding-left: 30px;
-    margin: 5px; 
-    text-align: center;
-    color: white;
+	background: rgba(0, 0, 0, 0.8);
+	padding: 8px; 
+	padding-left: 30px;
+	margin: 5px; 
+	text-align: center;
+	color: white;
 }
 
 .mission-tile:before {
 	content: "\f0c8";
-    font-family: FontAwesome;
-    font-size: 1.2em;
-    vertical-align: center;
-        position:absolute;
-    margin-left:-22px;
+	font-family: FontAwesome;
+	font-size: 1.2em;
+	vertical-align: center;
+	position:absolute;
+	margin-left:-22px;
 }
 
 .mission-tile.active {
-    border: 2px solid #EDF031;
+	border: 2px solid #EDF031;
 }
 
 .mission-tile.skipped {
