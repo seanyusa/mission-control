@@ -60,24 +60,28 @@
 </body>
 
 <script type="text/javascript">
-	var teamJson = JSON.parse('{"teamName": "B1", "status": "online","missions": [{"missionName": "M1","missionStatus": "completed"},{"missionName": "M2","missionStatus": "completed"},{"missionName": "M3","missionStatus": "skipped"},{"missionName": "M4","missionStatus": "active"},{"missionName": "M5","missionStatus": "offline"},{"missionName": "M5","missionStatus": "offline"}]}');
-	teamJson.teamWidth = '19.5%';
+	var teams = JSON.parse('[{"teamName":"B1","status":"online","missions":[{"missionName":"M1","missionStatus":"completed"},{"missionName":"M2","missionStatus":"completed"},{"missionName":"M3","missionStatus":"completed"},{"missionName":"M4","missionStatus":"active"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"B2","status":"offline","missions":[{"missionName":"M1","missionStatus":"offline"},{"missionName":"M2","missionStatus":"offline"},{"missionName":"M3","missionStatus":"offline"},{"missionName":"M4","missionStatus":"offline"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"G1","status":"offline","missions":[{"missionName":"M1","missionStatus":"offline"},{"missionName":"M2","missionStatus":"offline"},{"missionName":"M3","missionStatus":"offline"},{"missionName":"M4","missionStatus":"offline"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"G2","status":"online","missions":[{"missionName":"M1","missionStatus":"completed"},{"missionName":"M2","missionStatus":"completed"},{"missionName":"M3","missionStatus":"skipped"},{"missionName":"M4","missionStatus":"completed"},{"missionName":"M5","missionStatus":"active"},{"missionName":"M6","missionStatus":"offline"}]}]');
+	teamWidth = '19.5%';
 	var teamTemplate = document.getElementById('team-template').innerHTML;
 	Mustache.parse(teamTemplate);
 	var missionTemplate = document.getElementById('mission-template').innerHTML;
 	Mustache.parse(missionTemplate);
 
-	var missionTileContent = "";
-	for (var i in teamJson.missions) {
-		missionTileContent += Mustache.render(missionTemplate, teamJson.missions[i]);
-	}
-	console.log(missionTileContent)
-	teamJson.missionArea = missionTileContent
-
 	var rendered = "";
-	for (var i = 0; i < 5; i++) {
-		rendered += Mustache.render(teamTemplate, teamJson);
+
+	for (var teamNum in teams) {
+		var missionTileContent = "";
+		for (var i in teams[teamNum].missions) {
+			missionTileContent += Mustache.render(missionTemplate, teams[teamNum].missions[i]);
+		}
+		console.log(missionTileContent);
+		teams[teamNum].missionArea = missionTileContent;
+		teams[teamNum].teamWidth = teamWidth;
+
+		rendered += Mustache.render(teamTemplate, teams[teamNum]);
 	}
+
+	
 	document.getElementById('team-area').innerHTML = rendered;
 </script>
 </html>
