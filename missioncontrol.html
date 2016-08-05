@@ -15,10 +15,10 @@
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
 	<script src="https://use.fontawesome.com/764dc9025c.js"></script>
+	<script src="js/renderer.js"></script>
 </head>
 
 <body>
-	<!-- <script src="js/scripts.js"></script> -->
 	<h1>
 		<img class="header-logo" src="assets/agencylogo.png" alt="IMF LOGO"/>
 		<span class="header">IMF Mission Control</span>
@@ -61,27 +61,9 @@
 </body>
 
 <script type="text/javascript">
-	var teams = JSON.parse('[{"teamName":"B1","status":"online","missions":[{"missionName":"M1","missionStatus":"completed"},{"missionName":"M2","missionStatus":"completed"},{"missionName":"M3","missionStatus":"completed"},{"missionName":"M4","missionStatus":"active"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"B2","status":"offline","missions":[{"missionName":"M1","missionStatus":"offline"},{"missionName":"M2","missionStatus":"offline"},{"missionName":"M3","missionStatus":"offline"},{"missionName":"M4","missionStatus":"offline"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"G1","status":"offline","missions":[{"missionName":"M1","missionStatus":"offline"},{"missionName":"M2","missionStatus":"offline"},{"missionName":"M3","missionStatus":"offline"},{"missionName":"M4","missionStatus":"offline"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"G2","status":"online","missions":[{"missionName":"M1","missionStatus":"completed"},{"missionName":"M2","missionStatus":"completed"},{"missionName":"M3","missionStatus":"skipped"},{"missionName":"M4","missionStatus":"completed"},{"missionName":"M5","missionStatus":"active"},{"missionName":"M6","missionStatus":"offline"}]}]');
-	teamWidth = '19.5%';
-	var teamTemplate = document.getElementById('team-template').innerHTML;
-	Mustache.parse(teamTemplate);
-	var missionTemplate = document.getElementById('mission-template').innerHTML;
-	Mustache.parse(missionTemplate);
-
-	var rendered = "";
-
-	for (var teamNum in teams) {
-		var missionTileContent = "";
-		for (var i in teams[teamNum].missions) {
-			missionTileContent += Mustache.render(missionTemplate, teams[teamNum].missions[i]);
-		}
-		console.log(missionTileContent);
-		teams[teamNum].missionArea = missionTileContent;
-		teams[teamNum].teamWidth = teamWidth;
-
-		rendered += Mustache.render(teamTemplate, teams[teamNum]);
-	}
-	document.getElementById('team-area').innerHTML = rendered;
+	var jsonData = '[{"teamName":"B1","status":"online","missions":[{"missionName":"M1","missionStatus":"completed"},{"missionName":"M2","missionStatus":"completed"},{"missionName":"M3","missionStatus":"completed"},{"missionName":"M4","missionStatus":"active"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"B2","status":"offline","missions":[{"missionName":"M1","missionStatus":"offline"},{"missionName":"M2","missionStatus":"offline"},{"missionName":"M3","missionStatus":"offline"},{"missionName":"M4","missionStatus":"offline"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"G1","status":"offline","missions":[{"missionName":"M1","missionStatus":"offline"},{"missionName":"M2","missionStatus":"offline"},{"missionName":"M3","missionStatus":"offline"},{"missionName":"M4","missionStatus":"offline"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"G2","status":"online","missions":[{"missionName":"M1","missionStatus":"completed"},{"missionName":"M2","missionStatus":"completed"},{"missionName":"M3","missionStatus":"skipped"},{"missionName":"M4","missionStatus":"completed"},{"missionName":"M5","missionStatus":"active"},{"missionName":"M6","missionStatus":"offline"}]}]';
+	
+	document.getElementById('team-area').innerHTML = renderJson(jsonData);
 </script>
 
 </html>
