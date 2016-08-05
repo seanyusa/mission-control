@@ -1,0 +1,103 @@
+html {
+	background-image: url("../assets/bgmap.png");
+
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  text-align: center;
+}
+
+.header {
+	background-color: rgba(0, 0, 0, 0.7);
+}
+
+.header-logo {
+	height: 100px;
+	width: 100px;
+	vertical-align: middle;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+h1 {
+	text-align: center;
+	color: white;
+	font-family: "Courier";
+	font-weight: normal;
+	font-size: 40px;
+}
+
+p {
+	font-family: "Courier";
+}
+
+.team-tile {
+	border-radius: 25px;
+	border: 2px solid #2F2AC0;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 8px; 
+    margin: 5px; 
+    text-align: center;
+    color: white;
+}
+
+.mission-tile {
+	border-radius: 25px;
+	border: 2px solid #2F2AC0;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 8px; 
+    padding-left: 30px;
+    margin: 5px; 
+    text-align: center;
+    color: white;
+}
+
+.mission-tile:before {
+	content: "\f0c8";
+    font-family: FontAwesome;
+    font-size: 1.2em;
+    vertical-align: center;
+        position:absolute;
+    margin-left:-22px;
+}
+
+.mission-tile.active {
+    border: 2px solid #EDF031;
+}
+
+.mission-tile.skipped {
+	border: 2px solid #C81C1C;
+	color: #A5A5A5;
+}
+
+.mission-tile.skipped:before {
+	content: "\f146";
+}
+
+.mission-tile.completed {
+	border: 2px solid #18DC22;
+}
+
+.mission-tile.completed:before {
+	content: "\f14a";
+}
+
+.mission-tile.offline {
+	border: 2px solid #2F2AC0;
+	color: #A5A5A5;
+}
+
+.mission-tile.online {
+	border: 2px solid #2F2AC0;
+	color: #18DC22;
+}
+
+.mission-tile.online:before {
+	content: "\f14a";
+}
+
+.team-path {
+	display: inline-block;
+	width: 30%;
+}
