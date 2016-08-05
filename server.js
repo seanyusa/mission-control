@@ -1,9 +1,12 @@
 var app = require('express')();
+var express = require('express');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+app.use(express.static('web'));
+
 app.get('/', function(req, res){
-  res.sendFile('index.html');
+  res.sendFile('web/missioncontrol.html', { root: __dirname });
 });
 
 io.on('connection', function(socket){
