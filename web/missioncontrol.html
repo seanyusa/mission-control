@@ -15,6 +15,7 @@
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
 	<script src="https://use.fontawesome.com/764dc9025c.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 	<script src="js/renderer.js"></script>
 </head>
 
@@ -27,7 +28,7 @@
 
 	<div id="team-area"></div>
 
-	<!-- Mustache js templates -->
+	<!-- BEGIN Mustache js templates -->
 	<script id="team-template" type="x-tmpl-mustache">
 		<div class="team-path" style="width: {{teamWidth}};">
 			<p class="team-tile">Unit: {{teamName}}</p>
@@ -38,31 +39,13 @@
 	<script id="mission-template" type="x-tmpl-mustache">
 		<p class="mission-tile {{missionStatus}}">Mission: {{missionName}}</p>
 	</script>
-
-	<!-- Some old code -->
-	<!-- <div class="team-path">
-		<p class="mission-tile plain">Unit: B1</p>
-		<p class="mission-tile online"><span class="fa fa-check-square fa-lg"></span> Online</p>
-		<p class="mission-tile completed plain"><span class="fa fa-check-square fa-lg"></span> Mission: 1</p>
-		<p class="mission-tile skipped plain"><span class="fa fa-minus-square fa-lg"></span> Mission: 2</p>
-		<p class="mission-tile active plain"><span class="fa fa-square fa-lg"></span> Mission: 3</p>
-		<p class="mission-tile offline"><span class="fa fa-square fa-lg"></span> Mission: 4</p>
-		<p class="mission-tile offline"><span class="fa fa-square fa-lg"></span> Mission: 5</p>
-		<p class="mission-tile offline"><span class="fa fa-square fa-lg"></span> Mission: 6</p>
-	</div> -->
-	<!-- <p class="round-container plain">Unit: Blue001</p>
-	<p class="round-container offline"><span class="fa fa-square fa-lg"></span> Offline</p>
-	<p class="round-container online"><span class="fa fa-check-square fa-lg"></span> Online</p>
-	<p class="round-container plain"><span class="fa fa-check-square fa-lg"></span> Mission: 1</p>
-	<p class="round-container plain"><span class="fa fa-square fa-lg"></span> Mission: 2</p>
-	<p class="round-container offline"><span class="fa fa-square fa-lg"></span> Mission: 3</p>
-	<p><span class="fa fa-check-square-o fa-lg"></span> Online</p> -->
-
+	<!-- END Mustache js templates -->
 </body>
 
 <script type="text/javascript">
+	var socket = io();
 	var jsonData = '[{"teamName":"B1","status":"online","missions":[{"missionName":"M1","missionStatus":"completed"},{"missionName":"M2","missionStatus":"completed"},{"missionName":"M3","missionStatus":"completed"},{"missionName":"M4","missionStatus":"active"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"B2","status":"offline","missions":[{"missionName":"M1","missionStatus":"offline"},{"missionName":"M2","missionStatus":"offline"},{"missionName":"M3","missionStatus":"offline"},{"missionName":"M4","missionStatus":"offline"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"G1","status":"offline","missions":[{"missionName":"M1","missionStatus":"offline"},{"missionName":"M2","missionStatus":"offline"},{"missionName":"M3","missionStatus":"offline"},{"missionName":"M4","missionStatus":"offline"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"G2","status":"online","missions":[{"missionName":"M1","missionStatus":"completed"},{"missionName":"M2","missionStatus":"completed"},{"missionName":"M3","missionStatus":"skipped"},{"missionName":"M4","missionStatus":"completed"},{"missionName":"M5","missionStatus":"active"},{"missionName":"M6","missionStatus":"offline"}]}]';
-	
+
 	document.getElementById('team-area').innerHTML = renderJson(jsonData);
 </script>
 

@@ -1,0 +1,24 @@
+{
+  "name": "missioncontrol-backend",
+  "version": "1.0.0",
+  "description": "Backend for receiving and serving updates to client.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seanyusa/mission-control-backend.git"
+  },
+  "author": "Sean",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seanyusa/mission-control-backend/issues"
+  },
+  "homepage": "https://github.com/seanyusa/mission-control-backend#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "http": "0.0.0",
+    "socket.io": "^1.4.8"
+  }
+}

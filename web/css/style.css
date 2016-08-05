@@ -72,7 +72,7 @@ p {
 }
 
 .mission-tile.skipped:before {
-	content: "\f146";
+	content: "\f146"; /* minus icon */
 }
 
 .mission-tile.completed {
@@ -80,7 +80,7 @@ p {
 }
 
 .mission-tile.completed:before {
-	content: "\f14a";
+	content: "\f14a"; /* check icon */
 }
 
 .mission-tile.offline {
@@ -94,7 +94,7 @@ p {
 }
 
 .mission-tile.online:before {
-	content: "\f14a";
+	content: "\f14a"; /* check icon */
 }
 
 .team-path {
