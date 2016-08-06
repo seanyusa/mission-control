@@ -52,6 +52,24 @@ io.on('connection', function(socket){
   console.log('a user connected');
   socket.emit('status-update', JSON.stringify(teams));
 
+  socket.on('advanceMission', function(teamNum){
+    console.log('advance: ' + teamNum);
+    teams = dataCreator.advanceMission(teams, teamNum);
+    io.emit('status-update', JSON.stringify(teams));
+  });
+
+  socket.on('skipMission', function(teamNum){
+    console.log('skip: ' + teamNum);
+    teams = dataCreator.skipMission(teams, teamNum);
+    io.emit('status-update', JSON.stringify(teams));
+  });
+
+  socket.on('backMission', function(teamNum){
+    console.log('back: ' + teamNum);
+    teams = dataCreator.backMission(teams, teamNum);
+    io.emit('status-update', JSON.stringify(teams));
+  });
+
   // var interval = setInterval(function () {
   // 	console.log('Sent event');
   //   socket.emit('status-update', JSON.stringify(teams));

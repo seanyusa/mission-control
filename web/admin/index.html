@@ -161,9 +161,9 @@
             <div>
               <h3>Team {{teamNum}} ({{teamName}}) - [Next Code Word: {{code}}]</h3>
               <h4>[Previous Mission: {{prevMissionName}}] [Current Mission: {{curMissionName}}] [Next Mission: {{nextMissionName}}]</h4>
-              <button type="button" class="btn btn-success">Advance</button>
-              <button type="button" class="btn btn-danger">Skip</button>
-              <button type="button" class="btn btn-warning">Back</button>
+              <button type="button" class="btn btn-success" onclick="advanceButtonClick({{teamNum}})">Advance</button>
+              <button type="button" class="btn btn-danger" onclick="skipButtonClick({{teamNum}})">Skip</button>
+              <button type="button" class="btn btn-warning" onclick="backButtonClick({{teamNum}})">Back</button>
             </div>
           </script>
         </section>
@@ -227,6 +227,18 @@
 
     //   return false;
     // });
+    function advanceButtonClick(teamNum) {
+      socket.emit('advanceMission', teamNum);
+      console.log('Advance' + teamNum);
+    }
+    function skipButtonClick(teamNum) {
+      socket.emit('skipMission', teamNum);
+      console.log('Skip' + teamNum);
+    }
+    function backButtonClick(teamNum) {
+      socket.emit('backMission', teamNum);
+      console.log('Back' + teamNum);
+    }
   </script>
 	
 	<script type="application/javascript">

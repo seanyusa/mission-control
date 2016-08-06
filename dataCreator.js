@@ -77,5 +77,21 @@ module.exports = {
     }
     teams[teamNum].missions[curMissionNum].missionStatus = 'active';
     return teams;
+  },
+  backMission: function (teams, teamNum) {
+    var curMissionNum = teams[teamNum].currentMission;
+    if (curMissionNum == -1) {
+      return teams;
+    }
+    var prevMissionNum = teams[teamNum].missions[curMissionNum].prev;
+    if (prevMissionNum == -1) {
+      return teams;
+    }
+    console.log(curMissionNum + ' ' + teams[teamNum].missions[curMissionNum].missionStatus)
+    teams[teamNum].missions[curMissionNum].missionStatus = 'offline';
+console.log(curMissionNum + ' ' + teams[teamNum].missions[curMissionNum].missionStatus)
+    teams[teamNum].currentMission = prevMissionNum;
+    teams[teamNum].missions[prevMissionNum].missionStatus = 'active';
+    return teams;
   }
 };
