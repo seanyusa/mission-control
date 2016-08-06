@@ -1,20 +1,19 @@
 module.exports = {
-	namesToTeams: function (names) {
+	dataToTeams: function (data) {
 		var teams = [];
-		for (var teamNum in names.teams) {
+		for (var teamNum in data.teams) {
 			teams[teamNum] = {};
-			teams[teamNum].teamName = names.teams[teamNum];
+			teams[teamNum].teamName = data.teams[teamNum].name;
 			teams[teamNum].status = 'offline';
 			teams[teamNum].currentMission = -1;
 			teams[teamNum].missions = [];
-			for (var missionNum in names.missions) {
+			for (var missionNum in data.missions) {
 				teams[teamNum].missions[missionNum] = {};
-				teams[teamNum].missions[missionNum].missionName = names.missions[missionNum];
+				teams[teamNum].missions[missionNum].missionName = data.missions[missionNum].name;
+        teams[teamNum].missions[missionNum].code = data.missions[missionNum].code;
 				teams[teamNum].missions[missionNum].missionStatus = 'offline';
-				teams[teamNum].missions[missionNum].next = -1;
 			}
 		}
-		console.log(JSON.stringify(teams));
     return teams;
 	},
 	injectRoutes: function (teams, routes) {
@@ -24,13 +23,17 @@ module.exports = {
       return teams;
     }
     for (var teamNum in teams) {
-      var prevMissionNum = routes[teamNum][0];
+      var prevMissionNum = -1;
+      var curMissionNum = routes[teamNum][0];
       teams[teamNum].currentMission = routes[teamNum][0];
       for (var missionNum = 1; missionNum < routes[teamNum].length; missionNum++) {
-        teams[teamNum].missions[prevMissionNum].next = routes[teamNum][missionNum];
-        prevMissionNum = routes[teamNum][missionNum];
+        teams[teamNum].missions[curMissionNum].next = routes[teamNum][missionNum];
+        teams[teamNum].missions[curMissionNum].prev = prevMissionNum;
+        prevMissionNum = curMissionNum;
+        curMissionNum = routes[teamNum][missionNum];
       }
-      teams[teamNum].missions[prevMissionNum].next = -1; // End
+      teams[teamNum].missions[curMissionNum].next = -1;
+      teams[teamNum].missions[curMissionNum].prev = prevMissionNum; // End
     }
     console.log(JSON.stringify(teams));
     return teams;

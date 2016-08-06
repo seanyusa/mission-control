@@ -23,3 +23,27 @@ function renderJson(jsonData)
 
 	return rendered;
 }
+
+function renderAdminJson(jsonData)
+{
+	var teams = JSON.parse(jsonData);
+	var adminTeamTemplate = document.getElementById('admin-team-template').innerHTML;
+	Mustache.parse(adminTeamTemplate);
+
+	var rendered = "";
+
+	for (var teamNum in teams) {
+		console.log(teams[teamNum].currentMission);
+		console.log(teams[teamNum].missions[teams[teamNum].currentMission]);
+		var curMission = teams[teamNum].missions[teams[teamNum].currentMission];
+		teams[teamNum].teamNum = teamNum;
+		teams[teamNum].code = curMission ? curMission.code : 'NULL';
+		teams[teamNum].prevMissionName = (curMission && curMission.prev != -1) ? teams[teamNum].missions[curMission.prev].missionName : 'NULL';
+		teams[teamNum].curMissionName = curMission ? curMission.missionName : 'NULL';
+		teams[teamNum].nextMissionName = (curMission && curMission.next != -1) ? teams[teamNum].missions[curMission.next].missionName : 'NULL';
+
+		rendered += Mustache.render(adminTeamTemplate, teams[teamNum]);
+	}
+
+	return rendered;
+}

@@ -38,20 +38,34 @@
 
 {
   "teams": [
-    "team1",
-    "team2",
-    "team3",
-    "team4",
-    "team5"
+    { "name": "team1" },
+    { "name": "team2" },
+    { "name": "team3" },
+    { "name": "team4" },
+    { "name": "team5" }
   ],
   "missions": [
-    "M1",
-    "M2",
-    "M3",
-    "M4",
-    "M5",
-    "M6"
+    { "name": "M1",
+      "code": "UNIVERSITY" },
+    { "name": "M2",
+      "code": "BOOKS" },
+    { "name": "M3",
+      "code": "HOME" },
+    { "name": "M4",
+      "code": "TRUTH" },
+    { "name": "M5",
+      "code": "GRID" },
+    { "name": "M6",
+      "code": "RELAX" }
   ]
+}
+
+{
+  "teamName": "team1",
+  "code": "MOTH",
+  "prevMission": "M2",
+  "curMission": "M3",
+  "nextMission": "M4",
 }
 
 [[0,1,2,3,5,4],
