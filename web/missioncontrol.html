@@ -44,6 +44,12 @@
 
 <script type="text/javascript">
 	var socket = io();
+
+	socket.on('status-update', function(data) {
+		document.getElementById('team-area').innerHTML = renderJson(data);
+		console.log('event receviced.')
+	});
+
 	var jsonData = '[{"teamName":"B1","status":"online","missions":[{"missionName":"M1","missionStatus":"completed"},{"missionName":"M2","missionStatus":"completed"},{"missionName":"M3","missionStatus":"completed"},{"missionName":"M4","missionStatus":"active"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"B2","status":"offline","missions":[{"missionName":"M1","missionStatus":"offline"},{"missionName":"M2","missionStatus":"offline"},{"missionName":"M3","missionStatus":"offline"},{"missionName":"M4","missionStatus":"offline"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"G1","status":"offline","missions":[{"missionName":"M1","missionStatus":"offline"},{"missionName":"M2","missionStatus":"offline"},{"missionName":"M3","missionStatus":"offline"},{"missionName":"M4","missionStatus":"offline"},{"missionName":"M5","missionStatus":"offline"},{"missionName":"M6","missionStatus":"offline"}]},{"teamName":"G2","status":"online","missions":[{"missionName":"M1","missionStatus":"completed"},{"missionName":"M2","missionStatus":"completed"},{"missionName":"M3","missionStatus":"skipped"},{"missionName":"M4","missionStatus":"completed"},{"missionName":"M5","missionStatus":"active"},{"missionName":"M6","missionStatus":"offline"}]}]';
 
 	document.getElementById('team-area').innerHTML = renderJson(jsonData);

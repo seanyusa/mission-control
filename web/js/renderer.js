@@ -14,7 +14,7 @@ function renderJson(jsonData)
 		for (var i in teams[teamNum].missions) {
 			missionTileContent += Mustache.render(missionTemplate, teams[teamNum].missions[i]);
 		}
-		console.log(missionTileContent);
+		
 		teams[teamNum].missionArea = missionTileContent;
 		teams[teamNum].teamWidth = teamWidth;
 
