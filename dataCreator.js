@@ -43,19 +43,35 @@ module.exports = {
   },
   skipMission: function (teams, teamNum) {
     var curMissionNum = teams[teamNum].currentMission;
+    if (curMissionNum == -1) {
+      console.log('Warning in skipMission: trying to advance but already at the end!')
+      return teams;
+    }
     teams[teamNum].missions[curMissionNum].missionStatus = 'skipped';
     teams[teamNum].currentMission = teams[teamNum].missions[curMissionNum].next;
 
     curMissionNum = teams[teamNum].currentMission;
+    if (curMissionNum == -1) {
+      console.log('Warning in skipMission: end')
+      return teams;
+    }
     teams[teamNum].missions[curMissionNum].missionStatus = 'active';
     return teams;
   },
   advanceMission: function (teams, teamNum) {
     var curMissionNum = teams[teamNum].currentMission;
+    if (curMissionNum == -1) {
+      console.log('Warning in advanceMission: trying to advance but already at the end!')
+      return teams;
+    }
     teams[teamNum].missions[curMissionNum].missionStatus = 'completed';
     teams[teamNum].currentMission = teams[teamNum].missions[curMissionNum].next;
 
     curMissionNum = teams[teamNum].currentMission;
+    if (curMissionNum == -1) {
+      console.log('Warning in advanceMission: end')
+      return teams;
+    }
     teams[teamNum].missions[curMissionNum].missionStatus = 'active';
     return teams;
   }

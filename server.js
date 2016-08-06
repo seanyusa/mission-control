@@ -13,17 +13,35 @@ teams = dataCreator.namesToTeams(names);
 
 teams = dataCreator.injectRoutes(teams, routes);
 
-for (var i = 0; i < 4; i++) {
+// BEGIN Simulate Mission Advancing
+for (var i = 0; i < 5; i++) {
   teams = dataCreator.initializeTeam(teams, i);
 }
 
 teams = dataCreator.skipMission(teams, 3);
 teams = dataCreator.advanceMission(teams, 2);
 teams = dataCreator.advanceMission(teams, 2);
-teams = dataCreator.advanceMission(teams, 2);
-teams = dataCreator.advanceMission(teams, 2);
 
+var interval = setInterval(function () {
+    teams = dataCreator.advanceMission(teams, 0);
+    teams = dataCreator.advanceMission(teams, 3);
+    io.emit('status-update', JSON.stringify(teams));
+  }, 11000);
 
+var interval = setInterval(function () {
+    teams = dataCreator.advanceMission(teams, 1);
+    teams = dataCreator.advanceMission(teams, 2);
+    io.emit('status-update', JSON.stringify(teams));
+  }, 8000);
+
+var interval = setInterval(function () {
+    teams = dataCreator.advanceMission(teams, 0);
+    teams = dataCreator.advanceMission(teams, 4);
+    io.emit('status-update', JSON.stringify(teams));
+  }, 5000);
+// END Simulate Mission Advancing
+
+// Serve the /web folder as static files.
 app.use(express.static('web'));
 
 app.get('/', function(req, res){
@@ -34,10 +52,10 @@ io.on('connection', function(socket){
   console.log('a user connected');
   socket.emit('status-update', JSON.stringify(teams));
 
-  var interval = setInterval(function () {
-  	console.log('Sent event');
-        socket.emit('status-update', JSON.stringify(teams));
-    }, 15000);
+  // var interval = setInterval(function () {
+  // 	console.log('Sent event');
+  //   socket.emit('status-update', JSON.stringify(teams));
+  // }, 15000);
 
   socket.on('disconnect', function(){
     console.log('user disconnected');
