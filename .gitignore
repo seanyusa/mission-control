@@ -3,3 +3,6 @@ somesensitivedata.js
 
 # Dependency directories
 node_modules
+
+# Secret information
+secrets

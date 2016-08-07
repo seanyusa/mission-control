@@ -3,6 +3,7 @@ var express = require('express');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var dataCreator = require('./dataCreator');
+var secrets = require('./secrets');
 
 var teams = [];
 
@@ -83,7 +84,24 @@ io.on('connection', function(socket){
 var MailListener = require("mail-listener2");
 
 // START MAIL LISTENER HERE
-// Code Removed because Contains sensitive data
+var mailListener = new MailListener({
+  username: secrets.googleAccount.username,
+  password: secrets.googleAccount.password,
+  host: "imap.gmail.com",
+  port: 993, // imap port
+  tls: true,
+  connTimeout: 10000, // Default by node-imap
+  authTimeout: 5000, // Default by node-imap,
+  debug: console.log, // Or your custom function with only one incoming argument. Default: null
+  tlsOptions: { rejectUnauthorized: false },
+  mailbox: "INBOX", // mailbox to monitor
+  searchFilter: ["UNSEEN"], // the search filter being used after an IDLE notification has been retrieved
+  markSeen: true, // all fetched email willbe marked as seen and not fetched next time
+  fetchUnreadOnStart: true, // use it only if you want to get all unread email on lib start. Default is `false`,
+  mailParserOptions: {streamAttachments: true}, // options to be passed to mailParser lib.
+  attachments: false, // download attachments as they are encountered to the project directory
+  attachmentOptions: { directory: "attachments/" } // specify a download directory for attachments
+});
 // END MAIL LISTENER HERE
 
 mailListener.start(); // start listening
@@ -108,7 +126,25 @@ mailListener.on("mail", function(mail, seqno, attributes){
   console.log("from: " + mail.from[0].address);
   console.log("to: " + mail.to[0].address);
 
-  // Code Removed because Contains sensitive data
+  // node mailer!
+  var nodemailer = require('nodemailer');
+  // create reusable transporter object using the default SMTP transport 
+  var transporter = nodemailer.createTransport('smtps://' + secrets.googleAccount.username + ':' + secrets.googleAccount.password + '@smtp.gmail.com');
+
+  // setup e-mail data with unicode symbols 
+  var mailOptions = {
+      from: '"HQ" <' + mail.to[0].address + '>', // sender address 
+      to: mail.from[0].address, // list of receivers 
+      text: 'I am a robot number.', // plaintext body 
+    };
+    
+  // send mail with defined transport object 
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+      return console.log(error);
+    }
+    console.log('Message sent: ' + info.response);
+  });
 });
 
 http.listen(7000, function(){
