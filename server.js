@@ -80,6 +80,37 @@ io.on('connection', function(socket){
   });
 });
 
+var MailListener = require("mail-listener2");
+
+// START MAIL LISTENER HERE
+// Code Removed because Contains sensitive data
+// END MAIL LISTENER HERE
+
+mailListener.start(); // start listening
+
+mailListener.on("server:connected", function(){
+  console.log("imapConnected");
+});
+
+mailListener.on("server:disconnected", function(){
+  console.log("imapDisconnected");
+});
+
+mailListener.on("error", function(err){
+  console.log(err);
+});
+
+mailListener.on("mail", function(mail, seqno, attributes){
+  // do something with mail object including attachments
+  console.log("emailParsed");
+  console.log("Message content: " + JSON.stringify(mail.text));
+  console.log("subject: " + mail.subject);
+  console.log("from: " + mail.from[0].address);
+  console.log("to: " + mail.to[0].address);
+
+  // Code Removed because Contains sensitive data
+});
+
 http.listen(7000, function(){
   console.log('listening on *:7000');
 });

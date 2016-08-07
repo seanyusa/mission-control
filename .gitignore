@@ -1,4 +1,5 @@
 *.DS_Store
+somesensitivedata.js
 
 # Dependency directories
 node_modules
