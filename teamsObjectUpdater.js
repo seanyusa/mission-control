@@ -75,7 +75,11 @@ module.exports = {
       advanceMission(teamNum);
       // New current mission
       curMissionNum = teams[teamNum].currentMission;
-      return teams[teamNum].missions[curMissionNum].clue;
+      if (curMissionNum === -1) {
+        return teams[teamNum].finishMessage;
+      } else {
+        return teams[teamNum].missions[curMissionNum].clue;
+      }
     } else if (skipWord === enteredCodeWord) {
       // Code:Skip, respond with message to help finish mission.
       skipMission(teamNum);
@@ -94,7 +98,7 @@ module.exports = {
 };
 
 const CHECK_FORMATERROR_MESSAGE = 'I don\'t understand the text you entered. Looks like it\'s in the wrong format. (TEAMID CODEWORD)';
-const CHECK_TEAMERROR_MESSAGE = 'I can\'t find which unit you are a part of. Your text might be in the wrong format. (TEAMID CODEWORD) Make sure your TEAMID is correct.';
+const CHECK_TEAMERROR_MESSAGE = 'I can\'t find which team you are a part of. Your text might be in the wrong format. (TEAMID CODEWORD) Make sure your TEAMID is correct.';
 const CHECK_MISSIONERROR_MESSAGE = 'Your unit is not on a mission.';
 
 var teams = [];
