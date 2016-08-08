@@ -90,7 +90,7 @@ module.exports = {
       return teams[teamNum].teamOnlineMessage;
     } else {
       // Code:Incorrect, respond with inccorrect message.
-      return teams[teamNum].incorrectCodeMessage;
+      return teams[teamNum].missions[curMissionNum].incorrectCodeMessage;
     }
 
     // Unreachable
@@ -113,6 +113,15 @@ const CHECK_FORMATERROR_MESSAGE = [
 //     message: 'Delayed message'
 //   }
 // ]
+// NOTES: Add these fields to each team. (All are messaging object arrays)
+// formatErrorMessage
+// teamNotFoundMessage
+// noMissionMessage
+// finishMessage
+// teamOnlineMessage
+// missions[curMissionNum].clue
+// missions[curMissionNum].skipHint
+// missions[curMissionNum].incorrectCodeMessage
 const CHECK_TEAMERROR_MESSAGE = 'I can\'t find which team you are a part of. Your text might be in the wrong format. (TEAMID CODEWORD) Make sure your TEAMID is correct.';
 const CHECK_MISSIONERROR_MESSAGE = 'Your unit is not on a mission.';
 
