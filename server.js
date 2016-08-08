@@ -95,6 +95,11 @@ textService.on('server:disconnected', function () {
   
 });
 
+textService.on('received', function (addresses, text, subjectLine) {
+  console.log('received message: ' + JSON.stringify(text));
+  textService.sendText(addresses, 'Hello Node.js');
+});
+
 // io.emit('notification', JSON.parse('{ "subject": "' + mail.subject + '", "body": ' + JSON.stringify(mail.text) + '}'));
     // var response = teamsObjectUpdater.checkCode(teams, mail.text);
     // console.log(response);
