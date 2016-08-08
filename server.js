@@ -3,10 +3,11 @@ var express = require('express');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var teamsObjectUpdater = require('./teamsObjectUpdater');
-var secrets = require('./secrets');
+var secrets = require('./secrets'),
+  mailListenerSettings = require('./secrets/mailListenerSettings.js');
 var TextService = require('./textService');
 
-var textService = new TextService();
+var textService = new TextService(mailListenerSettings);
 
 var teams = [];
 
@@ -87,7 +88,7 @@ io.on('connection', function(socket){
 textService.start();
 
 textService.on('server:connected', function () {
-  
+  console.log('textService started');
 });
 
 textService.on('server:disconnected', function () {
