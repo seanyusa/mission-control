@@ -18,7 +18,7 @@ module.exports = {
 	},
 	injectRoutes: function (teams, routes) {
     // Validate dimensions first
-    if (routes.length != teams.length || routes[0].length != teams[0].missions.length) {
+    if (routes.length !== teams.length || routes[0].length !== teams[0].missions.length) {
       console.log('Error in injectRoutes: dimension mismatch.');
       return teams;
     }
@@ -46,7 +46,7 @@ module.exports = {
   },
   skipMission: function (teams, teamNum) {
     var curMissionNum = teams[teamNum].currentMission;
-    if (curMissionNum == -1) {
+    if (curMissionNum === -1) {
       console.log('Warning in skipMission: trying to advance but already at the end!')
       return teams;
     }
@@ -54,7 +54,7 @@ module.exports = {
     teams[teamNum].currentMission = teams[teamNum].missions[curMissionNum].next;
 
     curMissionNum = teams[teamNum].currentMission;
-    if (curMissionNum == -1) {
+    if (curMissionNum === -1) {
       console.log('Warning in skipMission: end')
       return teams;
     }
@@ -63,7 +63,7 @@ module.exports = {
   },
   advanceMission: function (teams, teamNum) {
     var curMissionNum = teams[teamNum].currentMission;
-    if (curMissionNum == -1) {
+    if (curMissionNum === -1) {
       console.log('Warning in advanceMission: trying to advance but already at the end!')
       return teams;
     }
@@ -71,7 +71,7 @@ module.exports = {
     teams[teamNum].currentMission = teams[teamNum].missions[curMissionNum].next;
 
     curMissionNum = teams[teamNum].currentMission;
-    if (curMissionNum == -1) {
+    if (curMissionNum === -1) {
       console.log('Warning in advanceMission: end')
       return teams;
     }
@@ -80,16 +80,47 @@ module.exports = {
   },
   backMission: function (teams, teamNum) {
     var curMissionNum = teams[teamNum].currentMission;
-    if (curMissionNum == -1) {
+    if (curMissionNum === -1) {
       return teams;
     }
     var prevMissionNum = teams[teamNum].missions[curMissionNum].prev;
-    if (prevMissionNum == -1) {
+    if (prevMissionNum === -1) {
       return teams;
     }
-    console.log(curMissionNum + ' ' + teams[teamNum].missions[curMissionNum].missionStatus)
     teams[teamNum].missions[curMissionNum].missionStatus = 'offline';
-console.log(curMissionNum + ' ' + teams[teamNum].missions[curMissionNum].missionStatus)
+    
+    teams[teamNum].currentMission = prevMissionNum;
+    teams[teamNum].missions[prevMissionNum].missionStatus = 'active';
+    return teams;
+  },
+  checkCode: function (teams, checkString) {
+    console.log('Checking code');
+    checkString = checkString.replace(/\r?\n|\r/g,'');
+    var splitStrings = checkString.split('_');
+    var teamName = splitStrings[0];
+    var codeWord = splitStrings[1];
+
+    for (var teamNum in teams) {
+      if (teams[teamNum].teamName === teamName) {
+        break;
+      }
+    }
+    console.log(teamNum);
+    var curMissionNum = teams[teamNum].currentMission;
+    if (curMissionNum === -1) {
+      return 'You are not on a mission.';
+    }
+
+    console.log('Code word: ' + teams[teamNum].missions[curMissionNum].code);
+    console.log('Input: ' + codeWord);
+    if (teams[teamNum].missions[curMissionNum].code === codeWord) {
+      console.log('codeWord Correct!');
+      return 'Correct next level riddle.';
+    } else {
+      console.log('codeWord false.');
+      return 'That\'s not the code word, try again';
+    }
+    
     teams[teamNum].currentMission = prevMissionNum;
     teams[teamNum].missions[prevMissionNum].missionStatus = 'active';
     return teams;
