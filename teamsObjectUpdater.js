@@ -27,7 +27,7 @@ module.exports = {
   },
   // Function that takes a string with team and code and validates the 
   // code and updates the team based on action needed.
-  // Then we return a string as the response.
+  // Then we return a messaging object array as the response.
   // Expecting string in format of 'TEAM CODE' or 'B1\nWORD'
   checkCode: function (checkString) {
     console.log('Checking code');
@@ -97,7 +97,22 @@ module.exports = {
   }
 };
 
-const CHECK_FORMATERROR_MESSAGE = 'I don\'t understand the text you entered. Looks like it\'s in the wrong format. (TEAMID CODEWORD)';
+const CHECK_FORMATERROR_MESSAGE = [
+  {
+    delay: 0,
+    message: 'I don\'t understand the text you entered. Looks like it\'s in the wrong format. (TEAMID CODEWORD)'
+  }
+];
+// [
+//   {
+//     delay: 0,
+//     message: 'First message'
+//   },
+//   {
+//     delay: 1500,
+//     message: 'Delayed message'
+//   }
+// ]
 const CHECK_TEAMERROR_MESSAGE = 'I can\'t find which team you are a part of. Your text might be in the wrong format. (TEAMID CODEWORD) Make sure your TEAMID is correct.';
 const CHECK_MISSIONERROR_MESSAGE = 'Your unit is not on a mission.';
 
