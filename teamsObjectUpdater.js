@@ -1,12 +1,16 @@
 module.exports = {
-  initializeTeams: function (teamJsonData, routes) {
-    dataToTeams(teamJsonData);
+  getTeams: function() {
+    return teams;
+  },
+  initializeTeams: function (teamJsonData, routes, perTeamMessages) {
+    dataToTeams(teamJsonData, perTeamMessages);
     // Validate dimensions first
     if (routes.length !== teams.length || routes[0].length !== teams[0].missions.length) {
       console.log('Error in injectRoutes: dimension mismatch.');
       return teams;
     }
     injectRoutes(routes);
+    console.log(teams);
     return teams;
   },
   teamOnline: function (teamNum) {
@@ -128,16 +132,22 @@ const CHECK_FORMATERROR_MESSAGE = [
 // missions[curMissionNum].clue
 // missions[curMissionNum].skipHint
 // missions[curMissionNum].incorrectCodeMessage
-const CHECK_TEAMERROR_MESSAGE = 'I can\'t find which team you are a part of. Your text might be in the wrong format. (TEAMID CODEWORD) Make sure your TEAMID is correct.';
+const CHECK_TEAMERROR_MESSAGE = [
+  {
+    delay: 0,
+    message: 'I can\'t find which team you are a part of. Your text might be in the wrong format. (TEAMID CODEWORD) Make sure your TEAMID is correct.'
+  }
+];
 const CHECK_MISSIONERROR_MESSAGE = 'Your unit is not on a mission.';
 
 var teams = [];
 
-function dataToTeams (data) {
+function dataToTeams (data, perTeamMessages) {
   for (var teamNum in data.teams) {
     teams[teamNum] = {};
     teams[teamNum].teamName = data.teams[teamNum].name;
     teams[teamNum].status = 'offline';
+    teams[teamNum].skipWord = 'skip';
     teams[teamNum].currentMission = -1;
     teams[teamNum].missions = [];
     for (var missionNum in data.missions) {
@@ -145,6 +155,9 @@ function dataToTeams (data) {
       teams[teamNum].missions[missionNum].missionName = data.missions[missionNum].name;
       teams[teamNum].missions[missionNum].code = data.missions[missionNum].code;
       teams[teamNum].missions[missionNum].missionStatus = 'offline';
+    }
+    for (var messageKey in perTeamMessages) {
+      teams[teamNum][messageKey] = perTeamMessages[messageKey];
     }
   }
 }

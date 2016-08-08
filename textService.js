@@ -7,7 +7,6 @@ var util = require('util');
 
 
 var TextService = function (mailListenerSettings) { 
-  console.log("Constructing!");
   var self = this;
 
   // Setup Mail Listener
@@ -52,18 +51,21 @@ var TextService = function (mailListenerSettings) {
 
 util.inherits(TextService, EventEmitter);
 
+// Start TextService
 TextService.prototype.start = function () {
   this.mailListener.start(); // start listening
 }
 
+// Send a Text
 TextService.prototype.sendText = function (addresses, text) {
   // setup e-mail data
   var mailOptions = {
-      from: '<' + addresses.to + '>', // sender address 
-      to: addresses.from, // list of receivers 
-      text: text // plaintext body 
-    };
-    
+    // Take the from address and use it as the to address since we are sending back.
+    from: '<' + addresses.to + '>', // sender address 
+    to: addresses.from, // list of receivers 
+    text: text // plaintext body 
+  };
+  console.log('Sending message: ' + JSON.stringify(mailOptions));
   // send mail with defined transport object 
   this.transporter.sendMail(mailOptions, function(error, info){
     if(error){
