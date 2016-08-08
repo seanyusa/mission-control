@@ -70,7 +70,16 @@ module.exports = {
     var skipWord = teams[teamNum].skipWord.toUpperCase();
     var onlineWord = 'online'.toUpperCase();
 
-    if (correctCodeWord === enteredCodeWord) {
+    if (teams[teamNum].status === 'offline') {
+      if (onlineWord === enteredCodeWord) {
+        // Code:Online, respond custom online message.
+        teamOnline(teamNum);
+        return teams[teamNum].teamOnlineMessage;
+      } else {
+        // Still offline, respond custom help message.
+        return teams[teamNum].offlineHelpMessage;
+      }
+    } else if (correctCodeWord === enteredCodeWord) {
       // Code:Correct, respond with next level text.
       advanceMission(teamNum);
       // New current mission
@@ -84,10 +93,6 @@ module.exports = {
       // Code:Skip, respond with message to help finish mission.
       skipMission(teamNum);
       return teams[teamNum].missions[curMissionNum].skipHint;
-    } else if (onlineWord === enteredCodeWord) {
-      // Code:Online, respond custom online message.
-      teamOnline(teamNum);
-      return teams[teamNum].teamOnlineMessage;
     } else {
       // Code:Incorrect, respond with inccorrect message.
       return teams[teamNum].missions[curMissionNum].incorrectCodeMessage;
@@ -119,6 +124,7 @@ const CHECK_FORMATERROR_MESSAGE = [
 // noMissionMessage
 // finishMessage
 // teamOnlineMessage
+// offlineHelpMessage
 // missions[curMissionNum].clue
 // missions[curMissionNum].skipHint
 // missions[curMissionNum].incorrectCodeMessage
