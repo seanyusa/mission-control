@@ -2,15 +2,15 @@ module.exports = {
   getTeams: function() {
     return teams;
   },
-  initializeTeams: function (teamJsonData, routes, perTeamMessages) {
+  initializeTeams: function (teamJsonData, routes, perTeamMessages, perMissionMessages, perStoryMessages) {
     dataToTeams(teamJsonData, perTeamMessages);
     // Validate dimensions first
     if (routes.length !== teams.length || routes[0].length !== teams[0].missions.length) {
       console.log('Error in injectRoutes: dimension mismatch.');
       return teams;
     }
-    injectRoutes(routes);
-    console.log(teams);
+    injectRoutes(routes, perMissionMessages, perStoryMessages);
+    console.log(JSON.stringify(teams));
     return teams;
   },
   teamOnline: function (teamNum) {
@@ -162,7 +162,8 @@ function dataToTeams (data, perTeamMessages) {
   }
 }
 
-function injectRoutes (routes) {
+function injectRoutes (routes, perMissionMessages, perStoryMessages) {
+  console.log(perMissionMessages);
   for (var teamNum in teams) {
     var prevMissionNum = -1;
     var curMissionNum = routes[teamNum][0];
@@ -170,12 +171,47 @@ function injectRoutes (routes) {
     for (var missionNum = 1; missionNum < routes[teamNum].length; missionNum++) {
       teams[teamNum].missions[curMissionNum].next = routes[teamNum][missionNum];
       teams[teamNum].missions[curMissionNum].prev = prevMissionNum;
+      teams[teamNum].missions[curMissionNum].clue = combineMessages(perStoryMessages[missionNum - 1].storyLine, perMissionMessages[curMissionNum].clue);
+      teams[teamNum].missions[curMissionNum].skipHint = perMissionMessages[missionNum - 1].skipHint;
+      teams[teamNum].missions[curMissionNum].incorrectCodeMessage = perStoryMessages[missionNum - 1].incorrectLine;
       prevMissionNum = curMissionNum;
       curMissionNum = routes[teamNum][missionNum];
     }
     teams[teamNum].missions[curMissionNum].next = -1;
     teams[teamNum].missions[curMissionNum].prev = prevMissionNum; // End
+    teams[teamNum].missions[curMissionNum].clue = combineMessages(perStoryMessages[missionNum - 1].storyLine, perMissionMessages[curMissionNum].clue);
+    teams[teamNum].missions[curMissionNum].skipHint = perMissionMessages[missionNum - 1].skipHint;
+    teams[teamNum].missions[curMissionNum].incorrectCodeMessage = perStoryMessages[curMissionNum].incorrectLine;
   }
+}
+
+function combineMessages (messagesArrayStory, messagesArrayMission) {
+  // Make copy before modifying delays.
+  messagesArrayMission = JSON.parse(JSON.stringify(messagesArrayMission));
+  // Combine story append mission.
+  const BUFFER = 500;
+  var additionalDelay = longestDelay(messagesArrayStory) + BUFFER;
+  for (var messageNum in messagesArrayMission) {
+    console.log(JSON.stringify(messagesArrayMission));
+    console.log(messagesArrayMission[messageNum].delay);
+    console.log(additionalDelay);
+    messagesArrayMission[messageNum].delay += additionalDelay;
+  }
+  return messagesArrayStory.concat(messagesArrayMission);
+}
+
+function longestDelay (messagesArray) {
+  var max = 0;
+  console.log(JSON.stringify(messagesArray));
+  for (var messageNum in messagesArray) {
+    var delay = messagesArray[messageNum].delay;
+    console.log(delay);
+    if (delay > max) {
+      max = delay;
+    }
+  }
+  console.log(max);
+  return max;
 }
 
 function teamOnline (teamNum) {
