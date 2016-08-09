@@ -78,7 +78,7 @@ module.exports = {
       if (onlineWord === enteredCodeWord) {
         // Code:Online, respond custom online message.
         teamOnline(teamNum);
-        return teams[teamNum].teamOnlineMessage;
+        return combineMessages(teams[teamNum].teamOnlineMessage, teams[teamNum].missions[curMissionNum].clue);
       } else {
         // Still offline, respond custom help message.
         return teams[teamNum].offlineHelpMessage;
@@ -185,19 +185,19 @@ function injectRoutes (routes, perMissionMessages, perStoryMessages) {
   }
 }
 
-function combineMessages (messagesArrayStory, messagesArrayMission) {
+function combineMessages (messagesArray1, messagesArray2) {
   // Make copy before modifying delays.
-  messagesArrayMission = JSON.parse(JSON.stringify(messagesArrayMission));
-  // Combine story append mission.
+  messagesArray2 = JSON.parse(JSON.stringify(messagesArray2));
+  // Combine 1 append 2.
   const BUFFER = 500;
-  var additionalDelay = longestDelay(messagesArrayStory) + BUFFER;
-  for (var messageNum in messagesArrayMission) {
-    console.log(JSON.stringify(messagesArrayMission));
-    console.log(messagesArrayMission[messageNum].delay);
+  var additionalDelay = longestDelay(messagesArray1) + BUFFER;
+  for (var messageNum in messagesArray2) {
+    console.log(JSON.stringify(messagesArray2));
+    console.log(messagesArray2[messageNum].delay);
     console.log(additionalDelay);
-    messagesArrayMission[messageNum].delay += additionalDelay;
+    messagesArray2[messageNum].delay += additionalDelay;
   }
-  return messagesArrayStory.concat(messagesArrayMission);
+  return messagesArray1.concat(messagesArray2);
 }
 
 function longestDelay (messagesArray) {
