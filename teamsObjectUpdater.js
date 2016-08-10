@@ -43,12 +43,12 @@ module.exports = {
       // ERR, unexpected string
       return CHECK_FORMATERROR_MESSAGE;
     }
-    var teamName = splitStrings[0];
+    var teamName = splitStrings[0].toUpperCase();
     var codeWord = splitStrings[1];
 
     var teamFound = false;
     for (var teamNum in teams) {
-      if (teams[teamNum].teamName === teamName) {
+      if (teams[teamNum].teamName.toUpperCase() === teamName) {
         teamFound = true;
         break;
       }
@@ -189,7 +189,7 @@ function combineMessages (messagesArray1, messagesArray2) {
   // Make copy before modifying delays.
   messagesArray2 = JSON.parse(JSON.stringify(messagesArray2));
   // Combine 1 append 2.
-  const BUFFER = 500;
+  const BUFFER = 1000;
   var additionalDelay = longestDelay(messagesArray1) + BUFFER;
   for (var messageNum in messagesArray2) {
     console.log(JSON.stringify(messagesArray2));
