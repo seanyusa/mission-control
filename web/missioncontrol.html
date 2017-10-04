@@ -43,7 +43,7 @@
 </body>
 
 <script type="text/javascript">
-	var socket = io();
+	var socket = io('http://localhost:12345');
 
 	socket.on('status-update', function(data) {
 		document.getElementById('team-area').innerHTML = renderJson(data);

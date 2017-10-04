@@ -156,7 +156,13 @@
       <section id="main-content">
         <section class="wrapper">
           <h1>Why is HTML SO HARD?</h1>
+          <div id="top-area1"></div>
           <div id="control-area"></div>
+          <script id="text-count-template" type="x-tmpl-mustache">
+            <div>
+              <h3>Text In: {{in}} - Text Out: {{out}}</h3>
+            </div>
+          </script>
           <script id="admin-team-template" type="x-tmpl-mustache">
             <div>
               <h3>Team {{teamNum}} ({{teamName}}) - [Next Code Word: {{code}}]</h3>
@@ -203,10 +209,15 @@
 	<script src="assets/js/zabuto_calendar.js"></script>	
 	
 	<script type="text/javascript">
-    var socket = io();
+    var socket = io('http://localhost:12345');
 
     socket.on('status-update', function(data) {
       document.getElementById('control-area').innerHTML = renderAdminJson(data);
+      console.log('event received.')
+    });
+
+    socket.on('text-update', function(data) {
+      document.getElementById('top-area1').innerHTML = renderCount(data);
       console.log('event received.')
     });
 

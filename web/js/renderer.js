@@ -47,3 +47,15 @@ function renderAdminJson(jsonData)
 
 	return rendered;
 }
+
+function renderCount(jsonData)
+{
+	var teams = JSON.parse(jsonData);
+	var adminTeamTemplate = document.getElementById('text-count-template').innerHTML;
+	Mustache.parse(adminTeamTemplate);
+
+	var rendered = Mustache.render(adminTeamTemplate, teams);
+
+
+	return rendered;
+}

@@ -17,9 +17,11 @@
   },
   "homepage": "https://github.com/seanyusa/mission-control-backend#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.14.0",
     "http": "0.0.0",
     "mail-listener2": "^0.1.8",
-    "socket.io": "^1.4.8"
+    "socket.io": "^1.4.8",
+    "twilio": "^3.7.0"
   }
 }
